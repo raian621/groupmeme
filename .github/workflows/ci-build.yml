@@ -25,4 +25,4 @@ jobs:
         run: python -m coverage run -m pytest -v
 
       - name: Report coverage
-        run: python -m coverage report
+        run: python -m coverage report --show-missing

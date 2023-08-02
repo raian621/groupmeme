@@ -46,6 +46,6 @@ def test_get_group():
   expected_response._content = text.encode('utf-8')
   requests.get = mock.MagicMock(return_value=expected_response)
   
-  group = get_group(token='token', id=123)
+  group = get_group(token='token', group_id=123)
   
   assert isinstance(group, Group)

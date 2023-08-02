@@ -3,7 +3,7 @@
 .PHONY test:
 test:
 	-python -m coverage run -m pytest -v
-	-python -m coverage report
+	-python -m coverage report --show-missing
 
 .PHONY dependencies:
 dependencies:

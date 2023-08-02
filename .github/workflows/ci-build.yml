@@ -12,15 +12,15 @@ jobs:
     runs-on: ubuntu-latest
     container: python:3.11-slim
 
-  steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    
-    - name: Install dependencies
-      run: make dependencies
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Install dependencies
+        run: make dependencies
 
-    - name: Run unit tests
-      run: python -m coverage run pytest -v
+      - name: Run unit tests
+        run: python -m coverage run pytest -v
 
-    - name: Report coverage
-      run: python -m coverage report
+      - name: Report coverage
+        run: python -m coverage report

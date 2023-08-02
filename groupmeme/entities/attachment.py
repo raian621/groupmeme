@@ -18,3 +18,6 @@ class Attachment:
     if token: self.token = token
     if placeholder: self.placeholder = placeholder
     if charmap: self.charmap = charmap
+  
+  def __dict__(self):
+    pass

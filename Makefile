@@ -2,8 +2,9 @@
 # ignores the return value for the unit test program
 .PHONY test:
 test:
-	-python -m coverage run -m pytest -v
-	-python -m coverage report --show-missing
+	@-python -m coverage run -m pytest -v
+	@-python -m coverage report --show-missing
+	@-python -m coverage erase
 
 .PHONY dependencies:
 dependencies:

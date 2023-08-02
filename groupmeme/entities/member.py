@@ -14,7 +14,8 @@ class Member:
     self.muted = muted
     self.image_url = image_url
     self.autokicked = autokicked
-    
+
+
 def member_from_dict(member_dict):
   return Member(
     member_id=member_dict['id'] if 'id' in member_dict else None,

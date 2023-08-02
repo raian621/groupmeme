@@ -1,7 +1,7 @@
 import requests
-from pygroupme.__constants__ import BASE_URL
-from pygroupme.entities.group import Group, group_from_dict
-from pygroupme.entities.member import member_from_dict
+from groupmeme.__constants__ import BASE_URL
+from groupmeme.entities.group import Group, group_from_dict
+from groupmeme.entities.member import member_from_dict
 
 def get_groups(
   token: str,

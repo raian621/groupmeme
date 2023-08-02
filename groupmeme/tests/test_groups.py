@@ -2,14 +2,14 @@ from unittest import mock
 import requests
 from requests import Response
 
-from pygroupme.api.groups import *
+from groupmeme.api.groups import *
 
 def test_get_groups():
   expected_response = Response()
   expected_response.status_code = 200
 
   text = ''
-  with open('pygroupme/tests/mock/groups.json', 'r') as file:
+  with open('groupmeme/tests/mock/groups.json', 'r') as file:
     text = file.read()
   expected_response._content = text.encode('utf-8')
   requests.get = mock.MagicMock(return_value=expected_response)
@@ -25,7 +25,7 @@ def test_get_former_groups():
   expected_response.status_code = 200
 
   text = ''
-  with open('pygroupme/tests/mock/groups.json', 'r') as file:
+  with open('groupmeme/tests/mock/groups.json', 'r') as file:
     text = file.read()
   expected_response._content = text.encode('utf-8')
   requests.get = mock.MagicMock(return_value=expected_response)
@@ -41,7 +41,7 @@ def test_get_group():
   expected_response.status_code = 200
 
   text = ''
-  with open('pygroupme/tests/mock/group.json', 'r') as file:
+  with open('groupmeme/tests/mock/group.json', 'r') as file:
     text = file.read()
   expected_response._content = text.encode('utf-8')
   requests.get = mock.MagicMock(return_value=expected_response)

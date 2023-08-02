@@ -1,0 +1,1 @@
+BASE_URL = 'https://api.groupme.com/v3'

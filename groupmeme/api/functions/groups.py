@@ -2,7 +2,7 @@ import requests
 from random import randint
 from groupmeme.entities.group import Group, group_from_dict
 import groupmeme.config as config
-
+from groupmeme.api.errors import UnexpectedStatusCodeError
 
 def get_groups(
   page: int|None = None,
@@ -17,6 +17,9 @@ def get_groups(
   if omit: req_params['omit'] = omit
   
   res = requests.get(f'{config.API_URL}/groups', params=req_params, headers=headers)
+  if res.status_code != 200:
+    raise UnexpectedStatusCodeError(res.status_code, 200)
+  
   groups_data = res.json()
   groups = []
 
@@ -30,6 +33,9 @@ def get_former_groups() -> [Group]:
   headers = { 'X-Access-Token': config.API_TOKEN }
   
   res = requests.get(f'{config.API_URL}/groups/former', headers=headers)
+  if res.status_code != 200:
+    raise UnexpectedStatusCodeError(res.status_code, 200)
+  
   groups_data = res.json()
   groups = []
 
@@ -45,6 +51,8 @@ def get_group(
   headers = { 'X-Access-Token': config.API_TOKEN }
  
   res = requests.get(f'{config.API_URL}/group/{group_id}', headers=headers)
+  if res.status_code != 200:
+    raise UnexpectedStatusCodeError(res.status_code, 200)
   
   if res.status_code == 404:
     raise ValueError
@@ -68,6 +76,9 @@ def create_group(
   if share: body['share'] = share
   
   res = requests.post(f'{config.API_URL}/groups', headers=headers, json=body)
+  if res.status_code != 201:
+    raise UnexpectedStatusCodeError(res.status_code, 201)
+  
   group_data = res.json()
   group = group_from_dict(group_data['response'])
   
@@ -92,6 +103,9 @@ def update_group(
   if share: body['share'] = name
   
   res = requests.post(f'{config.API_URL}/groups/{group_id}/update', headers=headers, json=body)
+  if res.status_code != 200:
+    raise UnexpectedStatusCodeError(res.status_code, 200)
+  
   group_data = res.json()
   group = group_from_dict(group_data['response'])
   
@@ -101,6 +115,9 @@ def update_group(
 def destroy_group(group_id:str):
   headers = { 'X-Access-Token': config.API_TOKEN }
   res = requests.post(f'{config.API_URL}/groups/{group_id}/destroy', headers=headers)
+  if res.status_code != 200:
+    raise UnexpectedStatusCodeError(res.status_code, 200)
+  
   return res.status_code
 
 def join_group(
@@ -110,6 +127,9 @@ def join_group(
   headers = { 'X-Access-Token': config.API_TOKEN }
   
   res = requests.post(f'{config.API_URL}/groups/{group_id}/join/{share_token}', headers=headers)
+  if res.status_code != 200:
+    raise UnexpectedStatusCodeError(res.status_code, 200)
+  
   group_data = res.json()
   group = group_from_dict(group_data['response'])
   
@@ -123,6 +143,9 @@ def rejoin_group(
   headers = { 'X-Access-Token': config.API_TOKEN }
   
   res = requests.post(f'{config.API_URL}/groups/{group_id}/join/{share_token}', headers=headers)
+  if res.status_code != 200:
+    raise UnexpectedStatusCodeError(res.status_code, 200)
+  
   group_data = res.json()
   group = group_from_dict(group_data['response'])
   
@@ -142,6 +165,9 @@ def change_group_ownership(
   }
   
   res = requests.post(f'{config.API_URL}/groups/change_owners', headers=headers, json=body)
+  if res.status_code != 200:
+    raise UnexpectedStatusCodeError(res.status_code, 200)
+  
   change_result = res.json()
   return change_result['response']
 

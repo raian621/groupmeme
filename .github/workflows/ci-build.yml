@@ -56,4 +56,4 @@ jobs:
         env:
           USERNAME: ${{ secrets.TEST_PYPI_USERNAME }}
           PASSWORD: ${{ secrets.TEST_PYPI_PASSWORD }}
-        run: python -m twine upload --repository testpypi dist/* -u $USERNAME -p $PASSWORD
+        run: python -m twine upload --repository testpypi dist/* -u $USERNAME -p $PASSWORD --skip-existing

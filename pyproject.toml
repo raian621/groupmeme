@@ -23,3 +23,7 @@ dependencies = [
 [project.urls]
 "Homepage" = "https://github.com/raian621/groupmeme"
 "Bug Tracker" = "https://github.com/raian621/groupmeme/issues"
+
+[tool.setuptools.packages.find]
+include = ["groupmeme"]
+exclude = ["docs*", "tests*"]

@@ -1,8 +1,8 @@
 import requests
 from random import randint
-from groupmeme.entities.group import Group, group_from_dict
-import groupmeme.config as config
-from groupmeme.api.errors import UnexpectedStatusCodeError
+from entities.group import Group, group_from_dict
+import config as config
+from api.errors import UnexpectedStatusCodeError
 
 def get_groups(
   page: int|None = None,

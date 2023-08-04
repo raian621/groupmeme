@@ -1,7 +1,7 @@
 import requests
-from groupmeme.entities.member import member_from_dict
-import groupmeme.config as config
-from groupmeme.api.errors import UnexpectedStatusCodeError
+from entities.member import member_from_dict
+import config as config
+from api.errors import UnexpectedStatusCodeError
 
 
 def add_members(

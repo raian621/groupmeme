@@ -4,10 +4,10 @@ import requests
 import json
 from requests import Response
 
-from groupmeme.api.members import *
-from groupmeme.entities import Member
-from groupmeme.api import init_groupmeme
-from groupmeme.api.errors import UnexpectedStatusCodeError
+from api.members import *
+from entities import Member
+from api import init_groupmeme
+from api.errors import UnexpectedStatusCodeError
 
 
 init_groupmeme(token='sdklfja', api_url='https://api.groupme.com/v3')
@@ -16,7 +16,7 @@ class TestMembersAPI(unittest.TestCase):
   def test_add_members(self):
     expected_response = Response()
     expected_response.status_code = 202
-    with open('groupmeme/tests/mock/add_members_res.json') as file:
+    with open('tests/mock/add_members_res.json') as file:
       expected_response._content = file.read().encode('utf-8')
     
     requests.post = mock.MagicMock(return_value=expected_response)
@@ -46,7 +46,7 @@ class TestMembersAPI(unittest.TestCase):
   def test_add_members_fails(self):
     expected_response = Response()
     expected_response.status_code = 400
-    with open('groupmeme/tests/mock/add_members_res.json') as file:
+    with open('tests/mock/add_members_res.json') as file:
       expected_response._content = file.read().encode('utf-8')
     
     requests.post = mock.MagicMock(return_value=expected_response)
@@ -74,7 +74,7 @@ class TestMembersAPI(unittest.TestCase):
   def test_add_members_result(self):
     expected_response = Response()
     expected_response.status_code = 200
-    with open('groupmeme/tests/mock/members_res.json') as file:
+    with open('tests/mock/members_res.json') as file:
       expected_response._content = file.read().encode('utf-8')
     
     requests.post = mock.MagicMock(return_value=expected_response)
@@ -88,7 +88,7 @@ class TestMembersAPI(unittest.TestCase):
   def test_add_members_result_fails(self):
     expected_response = Response()
     expected_response.status_code = 400
-    with open('groupmeme/tests/mock/members_res.json') as file:
+    with open('tests/mock/members_res.json') as file:
       expected_response._content = file.read().encode('utf-8')
     
     requests.post = mock.MagicMock(return_value=expected_response)
@@ -115,7 +115,7 @@ class TestMembersAPI(unittest.TestCase):
   def test_set_group_nickname(self):
     expected_response = Response()
     expected_response.status_code = 200
-    with open('groupmeme/tests/mock/member.json') as file:
+    with open('tests/mock/member.json') as file:
       expected_response._content = file.read().encode('utf-8')
 
     requests.post = mock.MagicMock(return_value=expected_response)
@@ -128,7 +128,7 @@ class TestMembersAPI(unittest.TestCase):
   def test_set_group_nickname_fails(self):
     expected_response = Response()
     expected_response.status_code = 400
-    with open('groupmeme/tests/mock/member.json') as file:
+    with open('tests/mock/member.json') as file:
       expected_response._content = file.read().encode('utf-8')
 
     requests.post = mock.MagicMock(return_value=expected_response)

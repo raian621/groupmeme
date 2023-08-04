@@ -1,8 +1,8 @@
-import groupmeme.api.groups as groups
-import groupmeme.api.messages as messages
-import groupmeme.api.members as members
-import groupmeme.config as config
-import groupmeme.api.errors as errors
+import api.groups as groups
+import api.messages as messages
+import api.members as members
+import config as config
+import api.errors as errors
 
 class GroupMeme:
   def __init__(self, token:str|None=None, api_url:str|None=None):

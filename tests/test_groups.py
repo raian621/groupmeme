@@ -3,10 +3,10 @@ import unittest
 import requests
 from requests import Response
 
-from groupmeme.api.groups import *
-from groupmeme.entities import Group
-from groupmeme.api import init_groupmeme
-from groupmeme.api.errors import UnexpectedStatusCodeError
+from api.groups import *
+from entities import Group
+from api import init_groupmeme
+from api.errors import UnexpectedStatusCodeError
 
 
 init_groupmeme(token='sdklfja', api_url='https://api.groupme.com/v3')
@@ -17,7 +17,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response.status_code = 200
 
     text = ''
-    with open('groupmeme/tests/mock/groups.json', 'r') as file:
+    with open('tests/mock/groups.json', 'r') as file:
       text = file.read()
     expected_response._content = text.encode('utf-8')
     requests.get = mock.MagicMock(return_value=expected_response)
@@ -33,7 +33,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response.status_code = 400
 
     text = ''
-    with open('groupmeme/tests/mock/groups.json', 'r') as file:
+    with open('tests/mock/groups.json', 'r') as file:
       text = file.read()
     expected_response._content = text.encode('utf-8')
     requests.get = mock.MagicMock(return_value=expected_response)
@@ -46,7 +46,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response.status_code = 200
 
     text = ''
-    with open('groupmeme/tests/mock/groups.json', 'r') as file:
+    with open('tests/mock/groups.json', 'r') as file:
       text = file.read()
     expected_response._content = text.encode('utf-8')
     requests.get = mock.MagicMock(return_value=expected_response)
@@ -62,7 +62,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response.status_code = 400
 
     text = ''
-    with open('groupmeme/tests/mock/groups.json', 'r') as file:
+    with open('tests/mock/groups.json', 'r') as file:
       text = file.read()
     expected_response._content = text.encode('utf-8')
     requests.get = mock.MagicMock(return_value=expected_response)
@@ -75,7 +75,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response.status_code = 200
 
     text = ''
-    with open('groupmeme/tests/mock/group.json', 'r') as file:
+    with open('tests/mock/group.json', 'r') as file:
       text = file.read()
     expected_response._content = text.encode('utf-8')
     requests.get = mock.MagicMock(return_value=expected_response)
@@ -90,7 +90,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response.status_code = 400
 
     text = ''
-    with open('groupmeme/tests/mock/group.json', 'r') as file:
+    with open('tests/mock/group.json', 'r') as file:
       text = file.read()
     expected_response._content = text.encode('utf-8')
     requests.get = mock.MagicMock(return_value=expected_response)
@@ -103,7 +103,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response.status_code = 201
     
     text = ''
-    with open('groupmeme/tests/mock/group.json', 'r') as file:
+    with open('tests/mock/group.json', 'r') as file:
       text = file.read()
     expected_response._content = text.encode('utf-8')
     requests.post = mock.MagicMock(return_value=expected_response)
@@ -127,7 +127,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response.status_code = 400
     
     text = ''
-    with open('groupmeme/tests/mock/group.json', 'r') as file:
+    with open('tests/mock/group.json', 'r') as file:
       text = file.read()
     expected_response._content = text.encode('utf-8')
     requests.post = mock.MagicMock(return_value=expected_response)
@@ -145,7 +145,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response.status_code = 200
     
     text = ''
-    with open('groupmeme/tests/mock/group.json', 'r') as file:
+    with open('tests/mock/group.json', 'r') as file:
       text = file.read()
     expected_response._content = text.encode('utf-8')
     requests.post = mock.MagicMock(return_value=expected_response)
@@ -170,7 +170,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response.status_code = 400
     
     text = ''
-    with open('groupmeme/tests/mock/group.json', 'r') as file:
+    with open('tests/mock/group.json', 'r') as file:
       text = file.read()
     expected_response._content = text.encode('utf-8')
     requests.post = mock.MagicMock(return_value=expected_response)
@@ -209,7 +209,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response.status_code = 200
     
     text = ''
-    with open('groupmeme/tests/mock/group.json', 'r') as file:
+    with open('tests/mock/group.json', 'r') as file:
       text = file.read()
     expected_response._content = text.encode('utf-8')
     requests.post = mock.MagicMock(return_value=expected_response)
@@ -228,7 +228,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response.status_code = 400
     
     text = ''
-    with open('groupmeme/tests/mock/group.json', 'r') as file:
+    with open('tests/mock/group.json', 'r') as file:
       text = file.read()
     expected_response._content = text.encode('utf-8')
     requests.post = mock.MagicMock(return_value=expected_response)
@@ -241,7 +241,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response.status_code = 200
     
     text = ''
-    with open('groupmeme/tests/mock/group.json', 'r') as file:
+    with open('tests/mock/group.json', 'r') as file:
       text = file.read()
     expected_response._content = text.encode('utf-8')
     requests.post = mock.MagicMock(return_value=expected_response)
@@ -260,7 +260,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response.status_code = 400
     
     text = ''
-    with open('groupmeme/tests/mock/group.json', 'r') as file:
+    with open('tests/mock/group.json', 'r') as file:
       text = file.read()
     expected_response._content = text.encode('utf-8')
     requests.post = mock.MagicMock(return_value=expected_response)

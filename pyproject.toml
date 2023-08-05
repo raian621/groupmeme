@@ -1,10 +1,10 @@
 [build-system]
-requires=["setuptools"]
-build-backend = "setuptools.build_meta"
+requires=["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "groupmeme"
-version = "0.0.1"
+version = "0.0.3"
 authors = [
   { name="Ryan Bell", email="ryan.bell62101@gmail.com" },
 ]
@@ -24,6 +24,5 @@ dependencies = [
 "Homepage" = "https://github.com/raian621/groupmeme"
 "Bug Tracker" = "https://github.com/raian621/groupmeme/issues"
 
-[tool.setuptools.packages.find]
-include = ["groupmeme"]
-exclude = ["docs*", "tests*"]
+[tool.hatch.build]
+exclude = ["tests*", "docs*"]

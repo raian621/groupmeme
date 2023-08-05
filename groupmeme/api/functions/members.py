@@ -1,12 +1,12 @@
 import requests
-from entities.member import member_from_dict
-import config as config
-from api.errors import UnexpectedStatusCodeError
+from groupmeme.entities.member import member_from_dict
+import groupmeme.config as config
+from groupmeme.api.errors import UnexpectedStatusCodeError
 
 
 def add_members(
   group_id:str,
-  members:[dict]
+  members:list[dict]
 ) -> str:
   headers = { 'X-Access-Token': config.API_TOKEN }
   body = { 'members': [member for member in members] }

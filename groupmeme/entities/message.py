@@ -1,4 +1,4 @@
-from .attachment import Attachment
+from groupmeme.entities.attachment import Attachment
 
 class Message:
   def __init__(
@@ -12,8 +12,8 @@ class Message:
     avatar_url:str,
     text:str,
     system:bool,
-    favorited_by:[str],
-    attachments:[Attachment]=None
+    favorited_by:list[str],
+    attachments:list[Attachment]=None
   ):
     self.id = _id
     self.source_guid = source_guid

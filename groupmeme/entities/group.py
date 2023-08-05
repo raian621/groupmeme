@@ -1,4 +1,4 @@
-from .member import Member, member_from_dict
+from groupmeme.entities.member import Member, member_from_dict
 
 class Group:
   def __init__(
@@ -11,7 +11,7 @@ class Group:
     creator_user_id:str,
     created_at:int,
     updated_at:int,
-    members:[Member],
+    members:list[Member],
     share_url: str,
     messages: any=None
   ):

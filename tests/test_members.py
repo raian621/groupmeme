@@ -4,10 +4,10 @@ import requests
 import json
 from requests import Response
 
-from api.members import *
-from entities import Member
-from api import init_groupmeme
-from api.errors import UnexpectedStatusCodeError
+from groupmeme.api.members import *
+from groupmeme.entities import Member
+from groupmeme.api import init_groupmeme
+from groupmeme.api.errors import UnexpectedStatusCodeError
 
 
 init_groupmeme(token='sdklfja', api_url='https://api.groupme.com/v3')

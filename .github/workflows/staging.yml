@@ -5,13 +5,13 @@ on:
 
 jobs:
   tests:
-    uses: raian621/groupmeme/.github/workflows/run-tests.yml
+    uses: raian621/groupmeme/.github/workflows/run-tests.yml@main
   
   staging:
-    needs: build
-    uses: actions/checkout@v2
     runs-on: ubuntu-latest
-
+    uses: actions/checkout@v2
+    needs: tests
+    
     steps:
       - name: Build package
         run: python -m build

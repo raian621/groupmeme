@@ -3,10 +3,10 @@ import unittest
 import requests
 from requests import Response
 
-from api.groups import *
-from entities import Group
-from api import init_groupmeme
-from api.errors import UnexpectedStatusCodeError
+from groupmeme.api.groups import *
+from groupmeme.entities import Group
+from groupmeme.api import init_groupmeme
+from groupmeme.api.errors import UnexpectedStatusCodeError
 
 
 init_groupmeme(token='sdklfja', api_url='https://api.groupme.com/v3')

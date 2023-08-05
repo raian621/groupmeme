@@ -1,8 +1,8 @@
 import requests
 from random import randint
-from entities import Message, Attachment, message_from_dict
-import config as config
-from api.errors import UnexpectedStatusCodeError
+from groupmeme.entities import Message, Attachment, message_from_dict
+import groupmeme.config as config
+from groupmeme.api.errors import UnexpectedStatusCodeError
 
 def get_messages(
   group_id:str,
@@ -10,7 +10,7 @@ def get_messages(
   since_id:int|None = None,
   after_id:int|None = None,
   limit:int|None = None
-) -> [Message]:
+) -> list[Message]:
   body = {}
   headers = { 'X-Access-Token': config.API_TOKEN }
   
@@ -31,7 +31,7 @@ def get_messages(
 def create_message(
   group_id:str,
   text:str,
-  attachments:[Attachment]=None
+  attachments:list[Attachment]=None
 ):
   body = { 'message': { 'text': text }}
   headers = { 'X-Access-Token': config.API_TOKEN }

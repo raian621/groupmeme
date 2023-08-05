@@ -1,0 +1,27 @@
+name: Deploy to staging environment
+on:
+  push:
+    branches: [main]
+
+jobs:
+  tests:
+    uses: ./.github/workflows/run-tests.yml
+  
+  staging:
+    needs: build
+    uses: actions/checkout@v2
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Build package
+        run: python -m build
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip wheel twine
+
+      - name: Deploy package to TestPyPi
+        env:
+          USERNAME: ${{ secrets.TEST_PYPI_USERNAME }}
+          PASSWORD: ${{ secrets.TEST_PYPI_PASSWORD }}
+        run: python -m twine upload --repository testpypi dist/* -u $USERNAME -p $PASSWORD --skip-existing

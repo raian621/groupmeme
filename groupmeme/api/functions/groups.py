@@ -1,14 +1,14 @@
 import requests
 from random import randint
-from entities.group import Group, group_from_dict
-import config as config
-from api.errors import UnexpectedStatusCodeError
+from groupmeme.entities.group import Group, group_from_dict
+import groupmeme.config as config
+from groupmeme.api.errors import UnexpectedStatusCodeError
 
 def get_groups(
   page: int|None = None,
   per_page: int|None = None,
   omit: str|None = None
-) -> [Group]:  
+) -> list[Group]:  
   req_params = {}
   headers = { 'X-Access-Token': config.API_TOKEN }
   
@@ -29,7 +29,7 @@ def get_groups(
   return groups
 
 
-def get_former_groups() -> [Group]:
+def get_former_groups() -> list[Group]:
   headers = { 'X-Access-Token': config.API_TOKEN }
   
   res = requests.get(f'{config.API_URL}/groups/former', headers=headers)

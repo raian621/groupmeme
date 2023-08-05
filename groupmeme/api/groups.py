@@ -1,4 +1,4 @@
-from .functions.groups import (
+from groupmeme.api.functions.groups import (
   get_groups,
   get_group,
   get_former_groups,

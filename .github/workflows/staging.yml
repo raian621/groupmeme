@@ -5,7 +5,7 @@ on:
 
 jobs:
   tests:
-    uses: ./.github/workflows/run-tests.yml
+    uses: .github/workflows/run-tests.yml
   
   staging:
     needs: build

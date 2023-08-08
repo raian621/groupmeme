@@ -1,0 +1,12 @@
+{
+  "response": {
+    "bot_id": "1234567890",
+    "text": "Hello World",
+    "attachments": [
+      {
+        "type": "image",
+        "url": "https://i.groupme.com/123456789"
+      }
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "response": {
+    "bot_id": "1234567890",
+    "group_id": "1234567890",
+    "name": "Dasani Bot",
+    "avatar_url": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/ipvgzU.b0q4M/v0/1000x-1.jpg",
+    "callback_url": "https://example.herokuapp.com/",
+    "dm_notification": false
+  }
+}

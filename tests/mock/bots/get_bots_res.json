@@ -1,0 +1,12 @@
+{
+  "response": [
+    {
+      "bot_id": "1234567890",
+      "group_id": "1234567890",
+      "name": "hal9000",
+      "avatar_url": "https://i.groupme.com/123456789",
+      "callback_url": "https://example.com/bots/callback",
+      "dm_notification": false
+    }
+  ]
+}

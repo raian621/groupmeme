@@ -3,8 +3,7 @@ import unittest
 import requests
 from requests import Response
 
-from groupmeme.api.groups import *
-from groupmeme.entities import Group
+from groupmeme.api import Group
 from groupmeme.api import init_groupmeme
 from groupmeme.api.errors import UnexpectedStatusCodeError
 
@@ -22,7 +21,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response._content = text.encode('utf-8')
     requests.get = mock.MagicMock(return_value=expected_response)
     
-    groups = get_groups()
+    groups = Group._groups()
     
     assert len(groups) == 1
     assert isinstance(groups[0], Group)
@@ -38,7 +37,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response._content = text.encode('utf-8')
     requests.get = mock.MagicMock(return_value=expected_response)
     
-    self.assertRaises(UnexpectedStatusCodeError, get_groups)
+    self.assertRaises(UnexpectedStatusCodeError, Group._groups)
     
     
   def test_get_former_groups(self):
@@ -51,7 +50,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response._content = text.encode('utf-8')
     requests.get = mock.MagicMock(return_value=expected_response)
     
-    groups = get_former_groups()
+    groups = Group._former_groups()
     
     assert len(groups) == 1
     assert isinstance(groups[0], Group)
@@ -67,7 +66,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response._content = text.encode('utf-8')
     requests.get = mock.MagicMock(return_value=expected_response)
     
-    self.assertRaises(UnexpectedStatusCodeError, get_former_groups)
+    self.assertRaises(UnexpectedStatusCodeError, Group._former_groups)
     
     
   def test_get_group(self):
@@ -80,7 +79,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response._content = text.encode('utf-8')
     requests.get = mock.MagicMock(return_value=expected_response)
     
-    group = get_group(group_id=123)
+    group = Group._get(group_id=123)
     
     assert isinstance(group, Group)
     
@@ -95,7 +94,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response._content = text.encode('utf-8')
     requests.get = mock.MagicMock(return_value=expected_response)
     
-    self.assertRaises(UnexpectedStatusCodeError, get_group, group_id=123)
+    self.assertRaises(UnexpectedStatusCodeError, Group._get, group_id=123)
     
     
   def test_create_group(self):
@@ -108,7 +107,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response._content = text.encode('utf-8')
     requests.post = mock.MagicMock(return_value=expected_response)
     
-    group = create_group(
+    group = Group._create(
       name='Family',
       description='Coolest Family Ever',
       image_url='https://i.groupme.com/123456789',
@@ -132,7 +131,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response._content = text.encode('utf-8')
     requests.post = mock.MagicMock(return_value=expected_response)
     
-    self.assertRaises(UnexpectedStatusCodeError, create_group,
+    self.assertRaises(UnexpectedStatusCodeError, Group._create,
       name='Family',
       description='Coolest Family Ever',
       image_url='https://i.groupme.com/123456789',
@@ -150,7 +149,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response._content = text.encode('utf-8')
     requests.post = mock.MagicMock(return_value=expected_response)
     
-    group = update_group(
+    group = Group._update(
       group_id='1234567890',
       name='Family',
       description='Coolest Family Ever',
@@ -175,7 +174,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response._content = text.encode('utf-8')
     requests.post = mock.MagicMock(return_value=expected_response)
     
-    self.assertRaises(UnexpectedStatusCodeError, update_group,
+    self.assertRaises(UnexpectedStatusCodeError, Group._update,
       group_id='1234567890',
       name='Family',
       description='Coolest Family Ever',
@@ -190,7 +189,7 @@ class TestGroupAPI(unittest.TestCase):
     
     requests.post = mock.MagicMock(return_value=expected_response)
     
-    result = destroy_group(group_id='1234567890')
+    result = Group._destroy(group_id='1234567890')
     
     assert result == 200
     
@@ -201,7 +200,7 @@ class TestGroupAPI(unittest.TestCase):
     
     requests.post = mock.MagicMock(return_value=expected_response)
     
-    self.assertRaises(UnexpectedStatusCodeError, destroy_group, group_id='1234567890')
+    self.assertRaises(UnexpectedStatusCodeError, Group._destroy, group_id='1234567890')
   
 
   def test_join_group(self):
@@ -214,7 +213,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response._content = text.encode('utf-8')
     requests.post = mock.MagicMock(return_value=expected_response)
     
-    group = join_group(group_id='1234567890', share_token='SHARE_TOKEN')
+    group = Group._join(group_id='1234567890', share_token='SHARE_TOKEN')
     
     assert group.name == 'Family'
     assert group.description == 'Coolest Family Ever'
@@ -233,7 +232,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response._content = text.encode('utf-8')
     requests.post = mock.MagicMock(return_value=expected_response)
     
-    self.assertRaises(UnexpectedStatusCodeError, join_group, group_id='1234567890', share_token='SHARE_TOKEN')
+    self.assertRaises(UnexpectedStatusCodeError, Group._join, group_id='1234567890', share_token='SHARE_TOKEN')
 
 
   def test_rejoin_group(self):
@@ -246,7 +245,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response._content = text.encode('utf-8')
     requests.post = mock.MagicMock(return_value=expected_response)
     
-    group = rejoin_group(group_id='1234567890', share_token='SHARE_TOKEN')
+    group = Group._rejoin(group_id='1234567890', share_token='SHARE_TOKEN')
     
     assert group.name == 'Family'
     assert group.description == 'Coolest Family Ever'
@@ -265,7 +264,7 @@ class TestGroupAPI(unittest.TestCase):
     expected_response._content = text.encode('utf-8')
     requests.post = mock.MagicMock(return_value=expected_response)
     
-    self.assertRaises(UnexpectedStatusCodeError, rejoin_group, group_id='1234567890', share_token='SHARE_TOKEN')
+    self.assertRaises(UnexpectedStatusCodeError, Group._rejoin, group_id='1234567890', share_token='SHARE_TOKEN')
     
     
   def test_change_group_ownership(self):
@@ -274,13 +273,13 @@ class TestGroupAPI(unittest.TestCase):
     expected_response._content = '{ "response": "mock rock" }'.encode('utf-8')
     requests.post = mock.MagicMock(return_value=expected_response)
     
-    change_group_ownership(group_id=1234, owner_id=4321)
+    Group._change_ownership(group_id=1234, owner_id=4321)
     
     
-  def test_change_group_ownership_fails(self):
+  def test_change_group_ownership__fails(self):
     expected_response = Response()
     expected_response.status_code = 400
     expected_response._content = '{ "response": "mock rock" }'.encode('utf-8')
     requests.post = mock.MagicMock(return_value=expected_response)
     
-    self.assertRaises(UnexpectedStatusCodeError, change_group_ownership, group_id=1234, owner_id=4321)
+    self.assertRaises(UnexpectedStatusCodeError, Group._change_ownership, group_id=1234, owner_id=4321)

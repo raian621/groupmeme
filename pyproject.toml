@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "groupmeme"
-version = "0.0.4"
+version = "0.0.5"
 authors = [
   { name="Ryan Bell", email="ryan.bell62101@gmail.com" },
 ]
@@ -28,4 +28,4 @@ dependencies = [
 "Bug Tracker" = "https://github.com/raian621/groupmeme/issues"
 
 [tool.hatch.build]
-exclude = ["tests*", "docs*"]
+exclude = ["tests*", "docs*", "*requirements.txt", "Makefile", "pip-dev.sh"]

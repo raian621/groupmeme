@@ -18,7 +18,6 @@ classifiers = [
 ]
 dependencies = [
   "requests",
-  "charset-normalizer",
   "idna",
   "urllib3",
   "certifi"

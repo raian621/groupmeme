@@ -1,15 +1,17 @@
-import groupmeme.api.groups as groups
-import groupmeme.api.messages as messages
-import groupmeme.api.members as members
 import groupmeme.config as config
-import groupmeme.api.errors as errors
+from .bot import Bot
+from .group import Group
+from .member import Member
+from .message import Message
+
 
 class GroupMeme:
   def __init__(self, token:str|None=None, api_url:str|None=None):
     init_groupmeme(token, api_url)
-    self.groups = groups.GroupsAPI()
-    self.messages = messages.MessagesAPI()
-    self.members = members.MembersAPI()
+    self.groups = Group
+    self.bots = Bot
+    self.messages = None
+    self.members = Member
     
     
 def init_groupmeme(token:str, api_url:str):

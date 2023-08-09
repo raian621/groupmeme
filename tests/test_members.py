@@ -1,11 +1,9 @@
 from unittest import mock
 import unittest
 import requests
-import json
 from requests import Response
 
-from groupmeme.api.members import *
-from groupmeme.entities import Member
+from groupmeme.api import Member
 from groupmeme.api import init_groupmeme
 from groupmeme.api.errors import UnexpectedStatusCodeError
 
@@ -20,7 +18,7 @@ class TestMembersAPI(unittest.TestCase):
       expected_response._content = file.read().encode('utf-8')
     
     requests.post = mock.MagicMock(return_value=expected_response)
-    add_members_result = add_members(1234, members={
+    add_members_result = Member._add(1234, members={
       'members': [
         {
           "nickname": "Mom",
@@ -50,7 +48,7 @@ class TestMembersAPI(unittest.TestCase):
       expected_response._content = file.read().encode('utf-8')
     
     requests.post = mock.MagicMock(return_value=expected_response)
-    self.assertRaises(UnexpectedStatusCodeError, add_members, 1234, members={
+    self.assertRaises(UnexpectedStatusCodeError, Member._add, 1234, members={
       'members': [
         {
           "nickname": "Mom",
@@ -78,7 +76,7 @@ class TestMembersAPI(unittest.TestCase):
       expected_response._content = file.read().encode('utf-8')
     
     requests.post = mock.MagicMock(return_value=expected_response)
-    result = add_members_result(group_id='123', result_id='GUID')
+    result = Member._add_result(group_id='123', result_id='GUID')
     
     assert len(result) == 2
     for member in result:
@@ -92,7 +90,7 @@ class TestMembersAPI(unittest.TestCase):
       expected_response._content = file.read().encode('utf-8')
     
     requests.post = mock.MagicMock(return_value=expected_response)
-    self.assertRaises(UnexpectedStatusCodeError, add_members_result, group_id='123', result_id='GUID')
+    self.assertRaises(UnexpectedStatusCodeError, Member._add_result, group_id='123', result_id='GUID')
   
   
   def test_remove_member(self):
@@ -100,7 +98,7 @@ class TestMembersAPI(unittest.TestCase):
     expected_response.status_code = 200
 
     requests.post = mock.MagicMock(return_value=expected_response)
-    result = remove_member(group_id='123', member_id='123')
+    result = Member._remove(group_id='123', member_id='123')
     
     assert result == 200
   
@@ -109,7 +107,7 @@ class TestMembersAPI(unittest.TestCase):
     expected_response.status_code = 400
 
     requests.post = mock.MagicMock(return_value=expected_response)
-    self.assertRaises(UnexpectedStatusCodeError, remove_member, group_id='123', member_id='123')
+    self.assertRaises(UnexpectedStatusCodeError, Member._remove, group_id='123', member_id='123')
   
   
   def test_set_group_nickname(self):
@@ -119,7 +117,7 @@ class TestMembersAPI(unittest.TestCase):
       expected_response._content = file.read().encode('utf-8')
 
     requests.post = mock.MagicMock(return_value=expected_response)
-    result = set_group_nickname(group_id='123', nickname='Nick')
+    result = Member._update(group_id='123', nickname='Nick')
     
     assert isinstance(result, Member)
     assert result.nickname == 'Nick'
@@ -132,6 +130,6 @@ class TestMembersAPI(unittest.TestCase):
       expected_response._content = file.read().encode('utf-8')
 
     requests.post = mock.MagicMock(return_value=expected_response)
-    self.assertRaises(UnexpectedStatusCodeError, set_group_nickname, group_id='123', nickname='Nick')
+    self.assertRaises(UnexpectedStatusCodeError, Member._update, group_id='123', nickname='Nick')
 
   

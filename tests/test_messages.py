@@ -4,7 +4,7 @@ import requests
 import json
 from requests import Response
 
-from groupmeme.api.messages import *
+from groupmeme.api import Message
 from groupmeme.api import init_groupmeme
 from groupmeme.api.errors import UnexpectedStatusCodeError
 
@@ -18,7 +18,7 @@ class TestMessagesAPI(unittest.TestCase):
     with open('tests/mock/messages.json') as file:
       expected_response._content = file.read().encode('utf-8')
     requests.get = mock.MagicMock(return_value=expected_response)
-    messages, count = get_messages(group_id='123', before_id=1234)
+    messages, count = Message._messages(group_id='123', before_id=1234)
     assert count == 123
     assert len(messages) == 1
   
@@ -28,7 +28,7 @@ class TestMessagesAPI(unittest.TestCase):
     with open('tests/mock/messages.json') as file:
       expected_response._content = file.read().encode('utf-8')
     requests.get = mock.MagicMock(return_value=expected_response)
-    self.assertRaises(UnexpectedStatusCodeError, get_messages, group_id='123', before_id=1234)
+    self.assertRaises(UnexpectedStatusCodeError, Message._messages, group_id='123', before_id=1234)
   
   def test_create_messages(self):
     expected_response = Response()
@@ -41,20 +41,18 @@ class TestMessagesAPI(unittest.TestCase):
       message_input = json.loads(text)['response']
     requests.post = mock.MagicMock(return_value=expected_response)
     
-    result = create_message(attachments=message_input['attachments'], text=message_input['text'], group_id='123')
+    result = Message._create(attachments=message_input['attachments'], text=message_input['text'], group_id='123')
     assert isinstance(result, Message)
   
   def test_create_messages_fails(self):
     expected_response = Response()
     expected_response.status_code = 400
     message_input = dict()
-    with open('tests/mock/message.json', 'r') as file:
-      text = file.read()
-      print(text)
-      expected_response._content = text.encode('utf-8')
-      message_input = json.loads(text)['response']
+    with open('tests/mock/message.json', 'rb') as file:
+      expected_response._content = file.read()
+      message_input = json.loads(expected_response._content.decode('utf-8'))['response']
     requests.post = mock.MagicMock(return_value=expected_response)
     
-    self.assertRaises(UnexpectedStatusCodeError, create_message, attachments=message_input['attachments'], text=message_input['text'], group_id='123')
+    self.assertRaises(UnexpectedStatusCodeError, Message._create, attachments=message_input['attachments'], text=message_input['text'], group_id='123')
 
   

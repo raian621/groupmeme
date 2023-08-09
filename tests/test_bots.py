@@ -3,8 +3,8 @@ from unittest import mock
 import requests
 from requests import Response
 
-from groupmeme.api.functions.bots import *
-from groupmeme.entities import Bot, Attachment
+from groupmeme.api import Bot
+from groupmeme.objects import Attachment
 from groupmeme.api import init_groupmeme
 from groupmeme.api.errors import UnexpectedStatusCodeError, APIParameterError
 
@@ -151,7 +151,7 @@ class TestBotsAPI(unittest.TestCase):
     
     requests.post = mock.MagicMock(return_value=expected_response)
     
-    result = Bot._destroy_bot()
+    result = Bot._destroy_bot(bot_id='1234')
     assert result == 200
     
     
@@ -161,6 +161,6 @@ class TestBotsAPI(unittest.TestCase):
     
     requests.post = mock.MagicMock(return_value=expected_response)
     
-    result = Bot._destroy_bot()
+    result = Bot._destroy_bot(bot_id='1234')
     assert result == 400
     

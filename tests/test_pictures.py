@@ -1,4 +1,4 @@
-from groupmeme.api.functions.pictures import *
+from groupmeme.api.pictures import *
 from groupmeme.api.errors import UnexpectedStatusCodeError
 from groupmeme.api import init_groupmeme
 

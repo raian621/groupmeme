@@ -3,6 +3,7 @@ from .bot import Bot
 from .group import Group
 from .member import Member
 from .message import Message
+from .user import User
 
 
 class GroupMeme:

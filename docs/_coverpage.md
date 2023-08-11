@@ -6,6 +6,6 @@
 
 [GitHub](https://github.com/raian621/groupmeme)
 [TestPyPi](https://test.pypi.org/project/groupmeme/)
-[Get Started](/quickstart)
+[Get Started](/get-started/quickstart)
 
 ![color](#ddeeee)

@@ -5,4 +5,5 @@
 * **Documentation**
   * **groupmeme**
     * [groupmeme.api](/groupmeme/api/)
+    * [groupmeme.api.errors](/groupmeme/api/errors)
     * [groupmeme.objects](/groupmeme/objects/)

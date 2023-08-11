@@ -82,7 +82,7 @@ class Bot:
     body = { 'bot_id': bot_id }
     if text:
       if len(text) > 1000:
-        raise APIParameterError('text', 1000, len(text)) 
+        raise APIParameterError(f'API parameter `text` exceeded max length of 1000 characters ({len(text)} characters)') 
       body['text'] = text
     if attachments: 
       body['attachments'] = [

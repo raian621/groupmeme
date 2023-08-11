@@ -37,6 +37,22 @@ class Group:
     share_url: str,
     messages: list['Message']=None
   ):
+    """
+    `Group` constructor
+
+    params:
+    - `id (str)`: ID of the Group.
+    - `name (str)`: The name of the Group
+    - `type (str)`: The type of Group (`'public'` or `'private'`)
+    - `description (str)`: The description of the Group
+    - `image_url (str)`: URL for the Group's profile image
+    - `members (list[Member])`: Members of the Group
+    - `created_at (str)`: The time (Unix time) that the Group was created
+    - `updated_at (str)`: The time (Unix time) that the Group was last updated
+    - `creator_user_id (str)`: ID of the creator of the Group
+    - `share_url (str)`: URL that can be used to join the Group
+    - `messages (list[Message])`: Messages in the Group
+    """
     self.id = id
     self.name = name
     self.type = type
@@ -66,6 +82,16 @@ class Group:
   
   @staticmethod
   def from_dict(group_dict:dict):
+    """
+    Returns a `Group` object initialized using a `dict`.
+
+    The dict must contain keys corresponding to the parameters in the `Group` 
+    constructor (`id`, `name`, `type`, `description`, `image_url`, `members`, 
+    `created_at`, `updated_at`, `creator_user_id`, `share_url`, `messages`)
+
+    params:
+    - `group_dict (dict)`: `dict` used to initialize the Group
+    """
     members = [Member.from_dict(member) for member in group_dict['members']]
 
     return Group(
@@ -87,7 +113,20 @@ class Group:
     page: int|None = None,
     per_page: int|None = None,
     omit: str|None = None
-  ) -> list['Group']:  
+  ) -> list['Group']:
+    """
+    Returns a paginated list of `Group` objects that the user is a part of
+
+    params:
+    - `page (int)`: Page of results, defaults to `1`
+    - `per_page (int)`: `Group` results per page, defaults to `10`
+    - `omit (str)`: Comma seperated list of fields to omit from each 
+    `Group` result. The only currently supported value is just 
+    `"memberships"` which results in the `members` field being empty
+
+    raises:
+    - `UnexpectedStatusCodeError`
+    """
     req_params = {}
     headers = { 'X-Access-Token': config.API_TOKEN }
     
@@ -110,6 +149,12 @@ class Group:
   
   @staticmethod
   def _former_groups() -> list['Group']:
+    """
+    Returns a list of all the `Group`s that the user has previously left
+
+    raises:
+    - `UnexpectedStatusCodeError`
+    """
     headers = { 'X-Access-Token': config.API_TOKEN }
   
     res = requests.get(f'{config.API_URL}/groups/former', headers=headers)
@@ -129,6 +174,15 @@ class Group:
   def _get(
     group_id: str
   ) -> 'Group':
+    """
+    Returns a `Group` matching the supplied `group_id`
+
+    params:
+    - `group_id (str)`: ID of a group
+
+    raises:
+    - `UnexpectedStatusCodeError`
+    """
     headers = { 'X-Access-Token': config.API_TOKEN }
   
     res = requests.get(f'{config.API_URL}/group/{group_id}', headers=headers)
@@ -144,11 +198,24 @@ class Group:
   
   
   @staticmethod
-  def _create(name:str,
+  def _create(
+    name:str,
     description:str|None = None,
     image_url:str|None = None,
     share:bool|None = None
   ) -> 'Group':
+    """
+    Creates a GroupMe `Group`
+
+    params:
+    - `name (str)`: The name of the `Group`
+    - `description (str)` *optional*:  Description of the `Group`
+    - `image_url (str)` *optional*: URL of the `Group`'s profile image
+    - `share (bool)`: *optional*: If `True` a share URL will be generated for the `Group`, if `False` a share URL will not be generated for the `Group`. Defaults to `False`
+    
+    raises:
+    - `UnexpectedStatusCodeError`
+    """
     headers = { 'X-Access-Token': config.API_TOKEN }
     body = { 'name': name }
 
@@ -175,6 +242,26 @@ class Group:
     office_mode:bool|None = None,
     share:bool|None = None
   ) -> 'Group':
+    """
+    Updates the information for a `Group`
+
+    Only the group's creator has authority to update the group.
+
+    params:
+    - `group_id (str)`: ID of the `Group` you wish to update the 
+    information of
+    - `name (str)` *optional*: The new name of the `Group`
+    - `description (str)` *optional*: The new description of the `Group`
+    - `image_url (str)` *optional*: The new URL of the profile picture of
+    the `Group`
+    - `office_mode (bool)` *optional*: The new value of `office_mode` for
+    the `Group`, if `office_mode` is `False` notifications from this group won't buzz your phone
+    - `share (bool)` *optional*: The new value of `share` for the `Group`,
+    if `True` then a share URL will be generated that can be used to join the `Group`
+
+    raises:
+    - `UnexpectedStatusCodeError`
+    """
     headers = { 'X-Access-Token': config.API_TOKEN }
     body = {}
     
@@ -196,6 +283,17 @@ class Group:
   
   @staticmethod
   def _destroy(group_id:str) -> int:
+    """
+    Destroy a `Group`
+
+    Only the group's creator has authority to destroy the group
+
+    params:
+    - `group_id (str)`: The ID of the `Group` to delete
+
+    raises:
+    - `UnexpectedStatusCodeError`
+    """
     headers = { 'X-Access-Token': config.API_TOKEN }
     res = requests.post(f'{config.API_URL}/groups/{group_id}/destroy', headers=headers)
     if res.status_code != 200:
@@ -209,6 +307,16 @@ class Group:
     group_id:str,
     share_token:str
   ):
+    """
+    Join a `Group`.
+
+    params:
+    - `group_id (str)`: ID of the `Group` you wish to join
+    - `share_token (str)`: Share token of the `Group` you wish to join
+
+    raises:
+    - `UnexpectedStatusCodeError`
+    """
     headers = { 'X-Access-Token': config.API_TOKEN }
     
     res = requests.post(f'{config.API_URL}/groups/{group_id}/join/{share_token}', headers=headers)
@@ -226,6 +334,18 @@ class Group:
     group_id:str,
     share_token:str
   ):
+    """
+    Rejoin a `Group`.
+
+    You have to have previously left (not banned or kicked) in order to rejoin a group.
+
+    params:
+    - `group_id (str)`: ID of the `Group` you wish to join
+    - `share_token (str)`: Share token of the `Group` you wish to join
+
+    raises:
+    - `UnexpectedStatusCodeError`
+    """
     headers = { 'X-Access-Token': config.API_TOKEN }
     
     res = requests.post(f'{config.API_URL}/groups/{group_id}/join/{share_token}', headers=headers)
@@ -237,11 +357,24 @@ class Group:
     
     return group
 
-
+  @staticmethod
   def _change_ownership(
     group_id:str,
     owner_id:str
   ):
+    """
+    Change ownership of the `Group` to another user.
+
+    Only the owner of the group has the authorization to change the 
+    ownership of the group.
+
+    params:
+    - `group_id (str)`: ID of the `Group` you wish to change the owner of
+    - `owner_id (str)`: ID of the user you wish to transfer ownership to
+
+    raises:
+    - `UnexpectedStatusCodeError`
+    """
     headers = { 'X-Access-Token': config.API_TOKEN }
     body = {
       'requests': [{
@@ -256,3 +389,76 @@ class Group:
     
     change_result = res.json()
     return change_result['response']
+  
+  
+  def update(
+    self,
+    name:str|None = None,
+    description:str|None = None,
+    image_url:str|None = None,
+    office_mode:bool|None = None,
+    share:bool|None = None
+  ) -> 'Group':
+    """
+    Updates the information for a `Group`
+
+    Only the group's creator has authority to update the group.
+
+    params:
+    - `name (str)` *optional*: The new name of the `Group`
+    - `description (str)` *optional*: The new description of the `Group`
+    - `image_url (str)` *optional*: The new URL of the profile picture of
+    the `Group`
+    - `office_mode (bool)` *optional*: The new value of `office_mode` for
+    the `Group`, if `office_mode` is `False` notifications from this group won't buzz your phone
+    - `share (bool)` *optional*: The new value of `share` for the `Group`,
+    if `True` then a share URL will be generated that can be used to join the `Group`
+
+    raises:
+    - `UnexpectedStatusCodeError`
+    """
+    return Group._update(self, name, description, image_url, office_mode, share)
+  
+  
+  def destroy(self) -> int:
+    """
+    Destroy a `Group`
+
+    Only the group's creator has authority to destroy the group
+
+    raises:
+    - `UnexpectedStatusCodeError`
+    """
+    return Group._destroy(self.id)
+
+
+  def rejoin(self, share_token:str):
+    """
+    Rejoin a `Group`.
+
+    You have to have previously left (not banned or kicked) in order to
+    rejoin a group.
+
+    params:
+    - `share_token (str)`: Share token of the `Group` you wish to join
+
+    raises:
+    - `UnexpectedStatusCodeError`
+    """
+    return Group._rejoin(self.id, share_token)
+
+
+  def change_ownership(self, owner_id:str):
+    """
+    Change ownership of the `Group` to another user.
+
+    Only the owner of the group has the authorization to change the 
+    ownership of the group.
+
+    params:
+    - `owner_id (str)`: ID of the user you wish to transfer ownership to
+
+    raises:
+    - `UnexpectedStatusCodeError`
+    """
+    return Group._change_ownership(self.id, owner_id)

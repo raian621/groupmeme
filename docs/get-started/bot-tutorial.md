@@ -1,4 +1,5 @@
 # Bot Tutorial
+Adapted from GroupMe's [offical bots tutorial](https://dev.groupme.com/tutorials/bots).
 
 ## Prerequisites
 - [Create a GroupMe account and obtain your API key](/get-started/quickstart#prerequisites)

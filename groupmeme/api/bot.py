@@ -16,6 +16,18 @@ class Bot:
   
   
   def __init__(self, name:str, group_id:str, bot_id:str, avatar_url:str=None, callback_url:str=None):
+    """
+    `Bot` constructor.
+    
+    params:
+    - `name (str)`: Name of the `Bot` (this is what the `Bot` appears as in 
+    the `Group`)
+    - `group_id (str)`: ID of the `Group` that the `Bot` is in 
+    - `bot_id (str)`: ID of the `Bot`
+    - `avatar_url (str)` *optional*: URL to the profile picture of the `Bot`
+    - `callback_url (str)` *optional*: URL that messages received by the `Bot`
+    will be sent to via an HTTP POST request
+    """
     self.name = name
     self.group_id = group_id
     self.bot_id = bot_id
@@ -38,6 +50,15 @@ class Bot:
 
 
   def from_dict(bot_dict:dict):
+    """
+    Returns a `Bot` object initialized using the `bot_dict` parameter
+    
+    `bot_dict` must contain the keys `name`, `group_id`, `bot_id`, and 
+    optionally `avatar_url`, `callback_url`
+    
+    params:
+    - `bot_dict (dict)`: Used to initialize the returned `Bot` object
+    """
     missing_keys = []
     for key in ('name', 'group_id', 'bot_id'):
       if key not in bot_dict:
@@ -57,6 +78,16 @@ class Bot:
 
   @staticmethod
   def _create(name:str, group_id:str, avatar_url:str, callback_url:str):
+    """
+    Creates a `Bot` and returns a `Bot` object.
+    
+    params:
+    - `name (str)`: Name of the `Bot`
+    - `group_id (str)`: ID for the `Group` that the `Bot` will be added to
+    - `avatar_url (str)`: URL for the profile picture of the `Bot`
+    - `callback_url (str)` *optional*: URL that messages received by the 
+    `Bot` will be sent to via an HTTP POST request
+    """
     body = {
       'bot': {
         'name': name,
@@ -79,6 +110,18 @@ class Bot:
   
   @staticmethod
   def _send_message(bot_id:str, text:str=None, attachments:list[Attachment]=None):
+    """
+    Sends a `Message` in the `Group` that the `Bot` is in. Returns the status 
+    code of the `Message` creation request.
+    
+    params:
+    - `bot_id (str)`: ID of the `Bot` you wish to send the `Message` as
+    - `text (str)`: Text of the `Message` (max length is 1000 characters)
+    - `attachments (list[Attachment])`: List of `Attachment`s for the `Message`
+    
+    raises:
+    - `APIParameterError` 
+    """
     body = { 'bot_id': bot_id }
     if text:
       if len(text) > 1000:
@@ -98,12 +141,14 @@ class Bot:
     return result.status_code
   
   
-  def send_message(self, text:str=None, attachments:list[Attachment]=None):
-    return Bot._send_message(self.bot_id, text, attachments)
-  
-  
   @staticmethod
   def _get_bots():
+    """
+    Returns a list of all the `Bot`s you have created but not deleted.
+    
+    raises:
+    - `UnexpectedStatusCodeError`
+    """
     result = requests.get(f'{config.API_URL}/bots', headers={ 'X-Access-Token': config.API_TOKEN })
     if result.status_code != 200:
       raise UnexpectedStatusCodeError(result.status_code, 200)
@@ -117,10 +162,37 @@ class Bot:
   
   
   @staticmethod
-  def _destroy_bot(bot_id:str):
+  def _destroy(bot_id:str):
+    """
+    Destroys the `Bot` with ID `bot_id`. Returns the status code of the request to destroy the `Bot`.
+    
+    params:
+    - `bot_id (str)`: ID of the `Bot` you intend to destroy
+    """
     result = requests.post(f'{config.API_URL}/bots/destroy', headers={ 'X-Access-Token': config.API_TOKEN }, json={ 'bot_id': bot_id })
     
     return result.status_code
+
+
+  def send_message(self, text:str=None, attachments:list[Attachment]=None):
+    """
+    Sends a `Message` in the `Group` that the `Bot` is in. Returns a `Message` object on success.
+    
+    params:
+    - `text (str)`: Text of the `Message` (max length is 1000 character
+    - `attachments (list[Attachment])`: List of `Attachment`s for the `Message`
+    
+    raises:
+    - `APIParameterError` 
+    """
+    return Bot._send_message(self.bot_id, text, attachments)
   
   
-bot = Bot(name='', group_id='', bot_id='')
+  def destroy(self):
+    """
+    Destroys the `Bot`. Returns the status code of the request to destroy the `Bot`.
+    
+    raises:
+    - `UnexpectedStatusCodeError` 
+    """ 
+    return Bot._destroy(self.id)

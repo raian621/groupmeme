@@ -151,7 +151,7 @@ class TestBotsAPI(unittest.TestCase):
     
     requests.post = mock.MagicMock(return_value=expected_response)
     
-    result = Bot._destroy_bot(bot_id='1234')
+    result = Bot._destroy(bot_id='1234')
     assert result == 200
     
     
@@ -161,6 +161,6 @@ class TestBotsAPI(unittest.TestCase):
     
     requests.post = mock.MagicMock(return_value=expected_response)
     
-    result = Bot._destroy_bot(bot_id='1234')
+    result = Bot._destroy(bot_id='1234')
     assert result == 400
     

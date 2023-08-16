@@ -1,4 +1,20 @@
+from typing import Any
+
+
 class Attachment:
+  __attrs__ = [
+    '_type',
+    'url',
+    'lat',
+    'lng',
+    'name',
+    'token',
+    'placeholder',
+    'charmap'
+  ]
+  
+  data = dict()
+  
   def __init__(
     self,
     _type:str,
@@ -33,17 +49,27 @@ class Attachment:
     self.placeholder = placeholder
     self.charmap = charmap
   
-  def __dict__(self):
-    attachment_dict = {
-      'type': self._type
-    }
+
+  def __setattr__(self, name:str, value:Any):
+    if name in self.__attrs__ and name != 'data':
+      self.data[name] = value
+    else:
+      raise AttributeError(name=name)
     
-    if self.url: attachment_dict['url'] = self.url
-    if self.lat: attachment_dict['lat'] = self.lat
-    if self.lng: attachment_dict['lng'] = self.lng
-    if self.name: attachment_dict['name'] = self.name
-    if self.token: attachment_dict['token'] = self.token
-    if self.placeholder: attachment_dict['placeholder'] = self.placeholder
-    
-    return attachment_dict
-    
+  
+  def __getattr__(self, name:str):
+    if name in self.__attrs__ and name != 'data':
+      return self.data[name]
+    else:
+      raise AttributeError(name=name)
+  
+  
+  def from_dict(attachment_dict: dict) -> 'Attachment':
+    attachment_dict['_type'] = attachment_dict['type']
+    del attachment_dict['type']
+    return Attachment(**attachment_dict)
+  
+  
+  def to_dict(self):
+    return self.data
+     

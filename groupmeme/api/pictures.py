@@ -3,6 +3,16 @@ import groupmeme.config as config
 from groupmeme.api.errors import UnexpectedStatusCodeError
 
 def upload_picture(filepath:str):
+  """
+  Upload a picture to GroupMe's image CDN
+  
+  params:
+  - `filepath (str)`: Path to the image file you wish to upload
+  
+  raises:
+  - `UnexpectedStatusCodeError`
+  - `FileNotFoundError`
+  """
   res = None
   headers = { 'X-Access-Token': config.API_TOKEN }
   with open(filepath, 'rb') as image_file:

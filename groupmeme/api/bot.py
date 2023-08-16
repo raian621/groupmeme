@@ -57,7 +57,7 @@ class Bot:
     optionally `avatar_url`, `callback_url`
     
     params:
-    - `bot_dict (dict)`: Used to initialize the returned `Bot` object
+    - `bot_dict (dict)`: Used to initialize the returned `Bot` object.
     """
     missing_keys = []
     for key in ('name', 'group_id', 'bot_id'):
@@ -94,8 +94,8 @@ class Bot:
         'group_id': group_id
       }
     }
-    if avatar_url: body['avatar_url'] = avatar_url
-    if callback_url: body['callback_url'] = callback_url
+    if avatar_url: body['bot']['avatar_url'] = avatar_url
+    if callback_url: body['bot']['callback_url'] = callback_url
     
     result = requests.post(
       url=f'{config.API_URL}/bots',
@@ -129,7 +129,7 @@ class Bot:
       body['text'] = text
     if attachments: 
       body['attachments'] = [
-        attachment.__dict__() for attachment in attachments
+        attachment.to_dict() for attachment in attachments
       ]
     
     print(body)

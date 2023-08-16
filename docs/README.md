@@ -4,6 +4,27 @@ Simple Python library for interfacing with the GroupMe API.
 
 I plan to add support for bot commands when I finish implementing the basic GroupMe API routes.
 
+## Features
+
+### Bots
+Create GroupMe bots and send messages from your bots to group chats.
+
+### Member management
+Add and remove members from your GroupMe groups.
+
+### Group management
+Create and disband GroupMe groups.
+
+### Messages
+Send messages to a group using GroupMeme.
+
+### Attachments
+Attach pictures, locations, events, and emojis to your messages and your bot's messages.
+
+### User Settings
+Change your name, email, zip code, and profile picture.
+
+
 ## Prerequisites
 
 In order to use the GroupMe API, you must have:

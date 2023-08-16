@@ -1,6 +1,6 @@
 ![logo](_media/logo.svg)
 
-# GroupMeme <small>0.0.7</small>
+# GroupMeme <small>0.0.8</small>
 
 - A Simple GroupMe API Library
 

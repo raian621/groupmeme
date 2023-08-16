@@ -1,0 +1,47 @@
+{
+  "response": {
+    "message": {
+      "id": "1234567890",
+      "source_guid": "GUID",
+      "recipient_id": "20",
+      "user_id": "1234567890",
+      "created_at": 1302623328,
+      "name": "John",
+      "avatar_url": "https://i.groupme.com/123456789",
+      "text": "Hello world ☃☃",
+      "favorited_by": [
+        "101"
+      ],
+      "attachments": [
+        {
+          "type": "image",
+          "url": "https://i.groupme.com/123456789"
+        },
+        {
+          "type": "image",
+          "url": "https://i.groupme.com/123456789"
+        },
+        {
+          "type": "location",
+          "lat": "40.738206",
+          "lng": "-73.993285",
+          "name": "GroupMe HQ"
+        },
+        {
+          "type": "emoji",
+          "placeholder": "☃",
+          "charmap": [
+            [
+              1,
+              42
+            ],
+            [
+              2,
+              34
+            ]
+          ]
+        }
+      ]
+    }
+  }
+}

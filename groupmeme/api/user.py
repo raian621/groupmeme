@@ -1,8 +1,9 @@
 import requests
 from groupmeme import config
 from groupmeme.api.errors import UnexpectedStatusCodeError
+from groupmeme.api.base import BaseInterface
 
-class User:
+class User(BaseInterface):
   __attrs__ = [
     'id',
     'phone_number',
@@ -12,20 +13,17 @@ class User:
     'updated_at',
     'email',
     'sms',
-    'avatar_url',
     'phone_number',
     'zip_code'
   ]
-  
-  data = dict()
   
   
   def __init__(
     self,
     id:str,
     name:str,
-    created_at:int,
-    updated_at:int,
+    created_at:int=None,
+    updated_at:int=None,
     image_url:str=None,
     zip_code:str=None,
     phone_number:str=None,
@@ -38,13 +36,13 @@ class User:
     params:
     - `id (str)`: User ID of the user.
     - `name (str)`: Name of the user.
-    - `created_at (int)`: Time (Unix time) that the user was created.
-    - `updated_at (int)`: Time (Unix time) that the user was last updated.
+    - `created_at (int)` *optional*: Time (Unix time) that the user was created.
+    - `updated_at (int)` *optional*client: Time (Unix time) that the user was last updated.
     - `image_url (str)` *optional*: URL to the user's profile picture.
     - `zip_code (str)` *optional*: Zip code of the user.
     - `phone_number (str)` *optional*: Phone number of the user.
     - `email (str)` *optional*: Email of the user.
-    - `sms (bool) *optional*?`: If the user is using SMS mode for GroupMe
+    - `sms (bool) *optional*?`: If the user is using SMS mode for GroupMe.
     """
     self.id = id
     self.image_url = image_url
@@ -66,20 +64,6 @@ class User:
     Must contain keys and values corresponding to the parameters in `User.__init__`
     """
     return User(**user_dict)
-  
-  
-  def __setattr__(self, name, value):
-    if name in self.__attrs__ and name != 'data':
-      self.data[name] = value
-    else:
-      raise AttributeError(name=name)
-    
-
-  def __getattr__(self, name, value):
-    if name in self.__attrs__ and name != 'data':
-      return self.data[name]
-    else:
-      raise AttributeError(name=name)
     
     
   def _me() -> 'User':
@@ -87,7 +71,7 @@ class User:
     Return a `User` object containing information from your account
     
     raises:
-    - UnexpectedStatusCodeError
+    - `UnexpectedStatusCodeError`
     """
     result = requests.get(f'{config.API_URL}/users/me', headers={ 'X-Access-Token': config.API_TOKEN })
     if result.status_code != 200:

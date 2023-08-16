@@ -1,7 +1,7 @@
-from typing import Any
+from groupmeme.api.base import BaseInterface
 
 
-class Attachment:
+class Attachment(BaseInterface):
   __attrs__ = [
     '_type',
     'url',
@@ -13,8 +13,7 @@ class Attachment:
     'charmap'
   ]
   
-  data = dict()
-  
+    
   def __init__(
     self,
     _type:str,
@@ -48,20 +47,6 @@ class Attachment:
     self.token = token
     self.placeholder = placeholder
     self.charmap = charmap
-  
-
-  def __setattr__(self, name:str, value:Any):
-    if name in self.__attrs__ and name != 'data':
-      self.data[name] = value
-    else:
-      raise AttributeError(name=name)
-    
-  
-  def __getattr__(self, name:str):
-    if name in self.__attrs__ and name != 'data':
-      return self.data[name]
-    else:
-      raise AttributeError(name=name)
   
   
   def from_dict(attachment_dict: dict) -> 'Attachment':

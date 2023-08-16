@@ -1,11 +1,12 @@
 import requests
 
 from groupmeme.api.errors import UnexpectedStatusCodeError, APIParameterError
+from groupmeme.api.base import BaseInterface
 from groupmeme.objects import Attachment
 from groupmeme import config
 
 
-class Message:
+class Message(BaseInterface):
   __attrs__ = [
     'id',
     'source_guid',
@@ -19,8 +20,6 @@ class Message:
     'favorited_by',
     'attachments'
   ]
-  
-  data = dict()
   
   
   def __init__(
@@ -71,21 +70,7 @@ class Message:
     self.system = system
     self.favorited_by = favorited_by
     self.attachments = attachments
-    
-    
-  def __setattr__(self, name, value):
-    if name in self.__attrs__ and name != 'data':
-      self.data[name] = value
-    else:
-      raise AttributeError(name=name)
-    
-  
-  def __getattr__(self, name):
-    if name in self.__attrs__ and name != 'data':
-      return self.data[name]
-    else:
-      raise AttributeError(name=name)
-  
+
   
   def from_dict(message_dict) -> 'Message':
     """

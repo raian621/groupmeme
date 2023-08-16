@@ -1,10 +1,11 @@
 from groupmeme.api.errors import UnexpectedStatusCodeError
+from groupmeme.api.base import BaseInterface
 from groupmeme import config
 
 import requests
 
 
-class Member:
+class Member(BaseInterface):
   __attrs__ = [
     'user_id',
     'member_id',
@@ -14,8 +15,6 @@ class Member:
     'autokicked',
     'member_id'
   ]
-  
-  data = dict()
   
   
   def __init__(
@@ -44,20 +43,6 @@ class Member:
     self.muted = muted
     self.image_url = image_url
     self.autokicked = autokicked
-  
-  
-  def __setattr__(self, name, value):
-    if name in self.__attrs__ and name != 'data':
-      self.data[name] = value
-    else:
-      raise AttributeError(name=name)
-
-
-  def __getattr__(self, name):
-    if name in self.__attrs__ and name != 'data':
-      return self.data[name]
-    else:
-      raise AttributeError(name=name)
 
 
   def from_dict(member_dict) -> 'Member':

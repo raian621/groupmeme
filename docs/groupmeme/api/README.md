@@ -9,6 +9,7 @@ Contains classes and functions used to interface with the GroupMe API.
 - [`Message`](/groupmeme/api/message)
 - [`Pictures`](/groupmeme/api/pictures)
 - [`User`](/groupmeme/api/user)
+- [`Chat`](/groupmeme/api/chat)
 
 
 ## Note on Static Class Functions and Class Functions

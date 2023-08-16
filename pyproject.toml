@@ -4,11 +4,11 @@ build-backend = "hatchling.build"
 
 [project]
 name = "groupmeme"
-version = "0.0.6"
+version = "0.0.7"
 authors = [
   { name="Ryan Bell", email="ryan.bell62101@gmail.com" },
 ]
-description = "Simple GroupMe API client library"
+description = "Simple GroupMe API library"
 readme = "README.md"
 requires-python = ">= 3.10"
 classifiers = [

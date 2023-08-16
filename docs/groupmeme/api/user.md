@@ -6,8 +6,8 @@ Constructor for `User`.
 **params:**
 - **`id (str)`**: User ID of the user.
 - **`name (str)`**: Name of the user.
-- **`created_at (int)`**: Time (Unix time) that the user was created.
-- **`updated_at (int)`**: Time (Unix time) that the user was last updated.
+- **`created_at (int)`** *optional*: Time (Unix time) that the user was created.
+- **`updated_at (int)`** *optional*: Time (Unix time) that the user was last updated.
 - **`image_url (str)`** *optional*: URL to the user's profile picture.
 - **`zip_code (str)`** *optional*: Zip code of the user.
 - **`phone_number (str)`** *optional*: Phone number of the user.

@@ -1,6 +1,7 @@
 import requests
 import groupmeme.config as config
 from groupmeme.api.errors import UnexpectedStatusCodeError, APIParameterError
+from groupmeme.api.base import BaseInterface
 from groupmeme.objects import Attachment
 
 class Bot:
@@ -11,8 +12,6 @@ class Bot:
     'avatar_url',
     'callback_url',
   ]
-  
-  data = dict()
   
   
   def __init__(self, name:str, group_id:str, bot_id:str, avatar_url:str=None, callback_url:str=None):
@@ -33,20 +32,6 @@ class Bot:
     self.bot_id = bot_id
     self.avatar_url = avatar_url
     self.callback_url = callback_url
-
-
-  def __setattr__(self, name, value):
-    if name in self.__attrs__ and name != 'data':
-      self.data[name] = value
-    else:
-      raise AttributeError(name=name)
-
-
-  def __getattr__(self, name):
-    if name in self.__attrs__ and name != 'data':
-      return self.data[name]
-    else:
-      raise AttributeError(name=name)
 
 
   def from_dict(bot_dict:dict):

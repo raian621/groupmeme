@@ -1,11 +1,12 @@
 from groupmeme.api.member import Member
 import groupmeme.config as config
 from groupmeme.api.errors import UnexpectedStatusCodeError
+from groupmeme.api.base import BaseInterface
 
 import requests
 
 
-class Group:
+class Group(BaseInterface):
   __attrs__ = [
     'id',
     'name',
@@ -19,9 +20,7 @@ class Group:
     'share_url',
     'messages'
   ]
-  
-  data = dict()
-  
+    
   
   def __init__(
     self, 
@@ -64,20 +63,6 @@ class Group:
     self.members = members
     self.share_url = share_url
     self.messages = messages
-    
-  
-  def __setattr__(self, name, value):
-    if name in self.__attrs__ and name != 'data':
-      self.data[name] = value
-    else:
-      raise AttributeError(name=name)
-    
-  
-  def __getattr__(self, name):
-    if name in self.__attrs__ and name != 'data':
-      return self.data[name]
-    else:
-      raise AttributeError(name=name)
   
   
   @staticmethod

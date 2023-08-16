@@ -5,6 +5,7 @@ from .member import Member
 from .message import Message
 from .user import User
 from .chat import Chat
+from .direct_message import DirectMessage
 
 
 class GroupMeme:
@@ -16,6 +17,7 @@ class GroupMeme:
     self.member = Member
     self.user = User
     self.chat = Chat
+    self.dm = DirectMessage
     
     
 def init_groupmeme(token:str, api_url:str):

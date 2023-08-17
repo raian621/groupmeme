@@ -9,6 +9,8 @@
       * [groupmeme.api.Chat](/groupmeme/api/chat)
       * [groupmeme.api.DirectMessage](/groupmeme/api/direct_message)
       * [groupmeme.api.Group](/groupmeme/api/group)
+      * [groupmeme.api.Like](/groupmeme/api/like)
+      * [groupmeme.api.Leaderboard](/groupmeme/api/leaderboard)
       * [groupmeme.api.Member](/groupmeme/api/member)
       * [groupmeme.api.Message](/groupmeme/api/message)
       * [groupmeme.api.User](/groupmeme/api/user)

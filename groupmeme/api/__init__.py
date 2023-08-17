@@ -6,6 +6,8 @@ from .message import Message
 from .user import User
 from .chat import Chat
 from .direct_message import DirectMessage
+from .like import Like
+from .leaderboard import Leaderboard
 
 
 class GroupMeme:
